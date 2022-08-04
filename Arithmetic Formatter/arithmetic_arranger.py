@@ -1,6 +1,6 @@
-def error_checking(operand1, operator, operand):
+def error_checking(operand1, operator, operand2):
     try:
-        if len(num1) > 4 or len(num2) > 4:
+        if len(operand1) > 4 or len(operand2) > 4:
             raise BaseException
     except:
         return "Error: Numbers cannot be more than four digits"
