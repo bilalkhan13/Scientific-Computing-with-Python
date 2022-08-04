@@ -1,4 +1,4 @@
-def error_checking(num1, operator, num2):
+def error_checking(operand1, operator, operand):
     try:
         if len(num1) > 4 or len(num2) > 4:
             raise BaseException
@@ -12,7 +12,7 @@ def error_checking(num1, operator, num2):
         return "Error: Operator must be '+' or '-'."
 
     try:
-        if num1 != True or num2 != True:
+        if operand1 != True or operand2 != True:
             raise BaseException
     except:
         return "Error: Numbers must only contain digits."
@@ -34,23 +34,23 @@ def arithmetic_arranger(arr):
 
     for problem in arr:
         split_problem = problem.split()
-        num1 = split_problem[0]
+        operand1 = split_problem[0]
         operator = split_problem[1]
-        num2 = split_problem[2]
-        e = error_checking(num1, operator, num2)
+        operand2 = split_problem[2]
+        e = error_checking(operand1, operator, operand2)
         if e != " ":
             return e
 
-        line1 += num1.rjust(10, " ")
-        line2 += operator.rjust(6, " ") + " " + num2.rjust(3, " ")
+        line1 += operand1.rjust(10, " ")
+        line2 += operator.rjust(6, " ") + " " + operand2.rjust(3, " ")
         line3 += space.rjust(10, " ")
         print()
         if operator == "+":
-            result = int(num1) + int(num2)
+            result = int(operand1) + int(operand2)
             result = str(result)
             res_display += result.rjust(10, " ")
         else:
-            result = int(num1) - int(num2)
+            result = int(operand1) - int(operand2)
             result = str(result)
             res_display += result.rjust(10, " ")
 
