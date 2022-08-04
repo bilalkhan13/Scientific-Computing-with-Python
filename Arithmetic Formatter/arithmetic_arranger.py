@@ -12,9 +12,7 @@ def error_checking(num1, operator, num2):
         return "Error: Operator must be '+' or '-'."
 
     try:
-        verify_num1 = num1.isnumeric()
-        verify_num2 = num2.isnumeric()
-        if verify_num1 != True or verify_num2 != True:
+        if num1 != True or num2 != True:
             raise BaseException
     except:
         return "Error: Numbers must only contain digits."
