@@ -1,5 +1,5 @@
 
-def add_time(startTime, endTime, dayOfWeek=None):
+def add_time(startTime, stopTime, dayOfWeek=None):
 
     # Start Time
     startTime = startTime.split(" ")
@@ -9,17 +9,17 @@ def add_time(startTime, endTime, dayOfWeek=None):
     startMinutes = int(startTime[1])
 
     # End Time
-    endTime = endTime.split(":")
-    endHours = int(endTime[0])
-    endMinutes = int(endTime[1])
+    stopTime = stopTime.split(":")
+    stopHours = int(stopTime[0])
+    stopMinutes = int(stopTime[1])
 
-    endMinutes = endMinutes + (60 * endHours)
+    stopMinutes = stopMinutes + (60 * stopHours)
 
     if am_pm == "PM":
         startHours = int(startHours) + 12
 
     startMinutes = startMinutes + (60 * startHours)
-    totalMinutes = startMinutes + endMinutes
+    totalMinutes = startMinutes + stopMinutes
 
     # Minutes Calculation
     finalMinutes = totalMinutes % 60
@@ -35,18 +35,18 @@ def add_time(startTime, endTime, dayOfWeek=None):
     days = int(finalHours / 24)
 
     # Am & PM Calculation
-    hoursFinal = hours % 12
+    finalHours = hours % 12
 
     if int(hours / 12) == 0:
         finalAmPm = "AM"
-        if hoursFinal == 0:
-            hoursFinal = 12
+        if finalHours == 0:
+            finalHours = 12
     else:
         finalAmPm = "PM"
-        if hoursFinal == 0:
-            hoursFinal = 12
+        if finalHours == 0:
+            finalHours = 12
 
-    new_time = str(hoursFinal) + ":" + finalMinutes + " " + finalAmPm
+    new_time = str(finalHours) + ":" + finalMinutes + " " + finalAmPm
 
     # Days Calculation
     if not dayOfWeek == None:
