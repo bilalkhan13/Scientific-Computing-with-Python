@@ -34,18 +34,19 @@ class Rectangle:
 
 class Square(Rectangle):
     def __init__(self, side):
-        self.width = side
-        self.height = side
+        self.side = side
+        super().__init__(side, side)
 
-    def set_side(self, side):
-        self.width = side
+    def set_side(self, val):
+        self.side = val
+        self.width= val
+        self.height= val
 
-    def set_height(self, side):
-        self.height = side
+    def set_width(self,value):
+        self.set_side(value)
+    def set_height(self,value):
+        self.set_side(value)
 
-    def set_side(self, side):
-        self.width = side
-        self.height = side
 
     def __str__(self):
-        return f'Square(side={self.height})'
+        return f'Square(side={self.side})'
