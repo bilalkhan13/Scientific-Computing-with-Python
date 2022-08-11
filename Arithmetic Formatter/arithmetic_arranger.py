@@ -2,106 +2,66 @@ from logging import exception
 
 
 def arithmetic_arranger(problems, displayMode=False):
-    # Local Variables
-    start = True
+
+    status = True
     first_operand_line = ""
     second_operand_line = ""
     dashes_line = ""
-    output_line = ""
+    result_line = ""
+    spaces_before_result = "    "
 
-    try:
-        if len(problems) > 5:
-            raise InvalidProblemsCount
-    except:
-        return "Error: Too many problems."
-
-# Main Loop
     for problem in problems:
-
-        operand1 = splitFunc(problem, 'firstOperand')
-        operator = splitFunc(problem, 'operator')
-        operand2 = splitFunc(problem, 'secondOperand')
+        [operand1, operator, operand2] = problem.split()
 
         # Exception Handling
-        try:
-            if len(operand1) > 4 or len(operand2) > 4:
-                raise LargeOperandsLength
-            if operator != "+" and operator != "-":
-                raise NotAValidOperator
-            if str(operand1).isnumeric() != True or str(operand2).isnumeric() != True:
-                raise NotADigit
-
-        except LargeOperandsLength:
+        if len(problems) > 5:
+            return "Error: Too many problems."
+        if len(operand1) > 4 or len(operand2) > 4:
             return "Error: Numbers cannot be more than four digits."
-
-        except NotAValidOperator:
+        if operator != "+" and operator != "-":
             return "Error: Operator must be '+' or '-'."
-
-        except NotADigit:
+        if str(operand1).isnumeric() != True or str(operand2).isnumeric() != True:
             return "Error: Numbers must only contain digits."
 
-        space = max(len(operand1), len(operand2))
+        alignment_space = max(len(operand1), len(operand2))
 
-        if start == True:
-            first_operand_line += operand1.rjust(space+2)
-            second_operand_line += operator + " " + operand2.rjust(space)
-            dashes_line += "-" * (space + 2)
+        if status == True:
+            first_operand_line += operand1.rjust(alignment_space+2)
+            second_operand_line += operator + " " + \
+                operand2.rjust(alignment_space)
+            dashes_line += "-" * (alignment_space + 2)
             if displayMode == True:
                 if operator == "+":
-                    output_line += str(int(operand1) +
-                                       int(operand2)).rjust(space + 2)
+                    result_line += add_operands(problem, alignment_space)
                 else:
-                    output_line += str(int(operand1) -
-                                       int(operand2)).rjust(space + 2)
-            start = False
+                    result_line += subtract_operands(problem, alignment_space)
+            status = False
         else:
-            first_operand_line += str(operand1).rjust(space+6)
+            first_operand_line += str(operand1).rjust(alignment_space+6)
             second_operand_line += str(operator).rjust(5) + \
-                " " + str(operand2).rjust(space)
-            dashes_line += "    " + "-" * (space+2)
+                " " + str(operand2).rjust(alignment_space)
+            dashes_line += spaces_before_result + "-" * (alignment_space+2)
             if displayMode == True:
                 if operator == "+":
-                    output_line += "    " + \
-                        str(int(operand1) + int(operand2)).rjust(space + 2)
+                    result_line += spaces_before_result + \
+                        add_operands(problem, alignment_space)
                 else:
-                    output_line += "    " + \
-                        str(int(operand1) - int(operand2)).rjust(space + 2)
+                    result_line += spaces_before_result + \
+                        subtract_operands(problem, alignment_space)
 
+    problems_output = first_operand_line + "\n" + \
+        second_operand_line + "\n" + dashes_line
     # Display Output
     if displayMode == True:
-        return first_operand_line + "\n" + second_operand_line + "\n" + dashes_line + "\n" + output_line
-    return first_operand_line + "\n" + second_operand_line + "\n" + dashes_line
-
-# Split Function
+        return problems_output + "\n" + result_line
+    return problems_output
 
 
-def splitFunc(problem, arg):
-    split_problem = problem.split()
-    if arg == "firstOperand":
-        return split_problem[0]
-    elif arg == "operator":
-        return split_problem[1]
-    else:
-        return split_problem[2]
-
-# Exception Classes
+def add_operands(problem, alignment_space):
+    [operand1, operator, operand2] = problem.split()
+    return str(int(operand1) + int(operand2)).rjust(alignment_space + 2)
 
 
-class Error (Exception):
-    pass
-
-
-class LargeOperandsLength(Error):
-    pass
-
-
-class NotAValidOperator(Error):
-    pass
-
-
-class InvalidProblemsCount(Error):
-    pass
-
-
-class NotADigit(Error):
-    pass
+def subtract_operands(problem, alignment_space):
+    [operand1, operator, operand2] = problem.split()
+    return str(int(operand1) - int(operand2)).rjust(alignment_space + 2)
