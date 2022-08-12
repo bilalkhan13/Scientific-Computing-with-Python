@@ -30,10 +30,8 @@ def arithmetic_arranger(problems, displayMode=False):
                 operand2.rjust(operand_max_length)
             dashes_line += "-" * (operand_max_length + 2)
             if displayMode == True:
-                if operator == "+":
-                    result_line += add_operands(problem, operand_max_length)
-                else:
-                    result_line += subtract_operands(problem, operand_max_length)
+                result_line += display_mode(problem,
+                                            operator, operand_max_length)
             status = False
         else:
             first_operand_line += str(operand1).rjust(operand_max_length+6)
@@ -41,12 +39,8 @@ def arithmetic_arranger(problems, displayMode=False):
                 " " + str(operand2).rjust(operand_max_length)
             dashes_line += spaces_before_result + "-" * (operand_max_length+2)
             if displayMode == True:
-                if operator == "+":
-                    result_line += spaces_before_result + \
-                        add_operands(problem, operand_max_length)
-                else:
-                    result_line += spaces_before_result + \
-                        subtract_operands(problem, operand_max_length)
+                result_line += spaces_before_result + \
+                    display_mode(problem, operator, operand_max_length)
 
     problems_output = first_operand_line + "\n" + \
         second_operand_line + "\n" + dashes_line
@@ -56,16 +50,15 @@ def arithmetic_arranger(problems, displayMode=False):
     return problems_output
 
 
-def display_mode(problem, operator, operator_max_length):
-    return str(add_operands(problem).rjust(int(operator_max_length))) if operator == "+" else str(subtract_operands(problem).rjust(operator_max_length))
+def display_mode(problem, operator, operand_max_length):
+    return str(add_operands(problem)).rjust(operand_max_length+2) if operator == "+" else str(subtract_operands(problem)).rjust(operand_max_length+2)
 
 
-
-def add_operands(problem, operand_max_length):
+def add_operands(problem):
     [operand1, operator, operand2] = problem.split()
-    return str(int(operand1) + int(operand2)).rjust(operand_max_length + 2)
+    return str(int(operand1) + int(operand2))
 
 
-def subtract_operands(problem, operand_max_length):
+def subtract_operands(problem):
     [operand1, operator, operand2] = problem.split()
-    return str(int(operand1) - int(operand2)).rjust(operand_max_length + 2)
+    return str(int(operand1) - int(operand2))
