@@ -1,4 +1,3 @@
-from logging import exception
 
 
 def arithmetic_arranger(problems, displayMode=False):
@@ -23,31 +22,31 @@ def arithmetic_arranger(problems, displayMode=False):
         if str(operand1).isnumeric() != True or str(operand2).isnumeric() != True:
             return "Error: Numbers must only contain digits."
 
-        alignment_space = max(len(operand1), len(operand2))
+        operand_max_length = max(len(operand1), len(operand2))
 
         if status == True:
-            first_operand_line += operand1.rjust(alignment_space+2)
+            first_operand_line += operand1.rjust(operand_max_length+2)
             second_operand_line += operator + " " + \
-                operand2.rjust(alignment_space)
-            dashes_line += "-" * (alignment_space + 2)
+                operand2.rjust(operand_max_length)
+            dashes_line += "-" * (operand_max_length + 2)
             if displayMode == True:
                 if operator == "+":
-                    result_line += add_operands(problem, alignment_space)
+                    result_line += add_operands(problem, operand_max_length)
                 else:
-                    result_line += subtract_operands(problem, alignment_space)
+                    result_line += subtract_operands(problem, operand_max_length)
             status = False
         else:
-            first_operand_line += str(operand1).rjust(alignment_space+6)
+            first_operand_line += str(operand1).rjust(operand_max_length+6)
             second_operand_line += str(operator).rjust(5) + \
-                " " + str(operand2).rjust(alignment_space)
-            dashes_line += spaces_before_result + "-" * (alignment_space+2)
+                " " + str(operand2).rjust(operand_max_length)
+            dashes_line += spaces_before_result + "-" * (operand_max_length+2)
             if displayMode == True:
                 if operator == "+":
                     result_line += spaces_before_result + \
-                        add_operands(problem, alignment_space)
+                        add_operands(problem, operand_max_length)
                 else:
                     result_line += spaces_before_result + \
-                        subtract_operands(problem, alignment_space)
+                        subtract_operands(problem, operand_max_length)
 
     problems_output = first_operand_line + "\n" + \
         second_operand_line + "\n" + dashes_line
@@ -57,11 +56,16 @@ def arithmetic_arranger(problems, displayMode=False):
     return problems_output
 
 
-def add_operands(problem, alignment_space):
-    [operand1, operator, operand2] = problem.split()
-    return str(int(operand1) + int(operand2)).rjust(alignment_space + 2)
+def display_mode(problem, operator, operator_max_length):
+    return str(add_operands(problem).rjust(int(operator_max_length))) if operator == "+" else str(subtract_operands(problem).rjust(operator_max_length))
 
 
-def subtract_operands(problem, alignment_space):
+
+def add_operands(problem, operand_max_length):
     [operand1, operator, operand2] = problem.split()
-    return str(int(operand1) - int(operand2)).rjust(alignment_space + 2)
+    return str(int(operand1) + int(operand2)).rjust(operand_max_length + 2)
+
+
+def subtract_operands(problem, operand_max_length):
+    [operand1, operator, operand2] = problem.split()
+    return str(int(operand1) - int(operand2)).rjust(operand_max_length + 2)
