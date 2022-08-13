@@ -9,13 +9,13 @@ class Category:
         self.amount = 0
         self.category = category
 
-    #Deposit Function
+    # Deposit Function
     def deposit(self, amount, desc=""):
         appendList = {"amount": amount, "description": desc}
         self.ledger.append(appendList)
         self.amount += amount
 
-    #Withdraw Function
+    # Withdraw Function
     def withdraw(self, amount, desc=""):
         if self.check_funds(amount) == True:
             self.amount -= amount
@@ -25,42 +25,39 @@ class Category:
         else:
             return False
 
-    #Balance Function
+    # Balance Function
     def get_balance(self):
         return self.amount
 
-    #Check Funds Availability
+    # Check Funds Availability
     def check_funds(self, amount):
         if self.amount < amount:
             return False
         else:
             return True
 
-    #Transfer Funds
+    # Transfer Funds
     def transfer(self, amount, category):
         if self.check_funds(amount) == True:
             self.amount -= amount
-            appendList = {"amount": -amount,
-                          "description": "Transfer to " + category.category}
-            self.ledger.append(appendList)
+            self.ledger.append({"amount": -amount, "description": "Transfer to " + category.category})
             category.deposit(amount, "Transfer from " + self.category)
             return True
         else:
             return False
 
-    #String Display
+    # String Display
     def __str__(self):
-        cat_len = len(self.category)
+        category_len = len(self.category)
         max_len = 30
         asteriks = []
 
-        for i in range(max_len - cat_len):
+        for i in range(max_len - category_len):
             asteriks.append('*')
         oneSideAsteriks = int(len(asteriks)/2)
         asteriks.insert(oneSideAsteriks, self.category)
         header = "".join(asteriks)
         ledger_items = []
-
         for item in self.ledger:
             whitespace = max_len
             ledger_item = []
@@ -75,12 +72,11 @@ class Category:
         total = self.get_balance()
         return f'{header}\n{ledger_lines}Total: {total}'
 
-
-#Spend Chart
+# Spend Chart
 def create_spend_chart(categories):
-    category_names = []
     y_axis = ["100", "90", "80", "70", "60", "50", "40", "30", "20", "10", "0"]
     graph_content = "Percentage spent by category\n"
+    category_names = []
     spent_percentage = []
     spent_list = []
     for category in categories:
@@ -101,8 +97,7 @@ def create_spend_chart(categories):
             else:
                 graph_content += "   "
         graph_content += " \n"
-    graph_content += "    ----" + ("---" * (len(category_names) - 1))
-    graph_content += "\n    "
+    graph_content += "    ----" + ("---" * (len(category_names) - 1)) + "\n    "
 
     longest_name_length = 0
     for name in category_names:
@@ -111,7 +106,7 @@ def create_spend_chart(categories):
     for val in range(longest_name_length):
         for name in category_names:
             if len(name) > val:
-                graph_content += " "+name[val]+" "
+                graph_content += " " + name[val]+" "
             else:
                 graph_content += "   "
         graph_content += " "
