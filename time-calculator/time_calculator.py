@@ -1,24 +1,18 @@
 
 def add_time(startTime, stopTime, dayOfWeek=None):
-
     # Start Time
-    startTime = startTime.split(" ")
-    am_pm = startTime[1]
-    startTime = startTime[0].split(":")
-    startHours = int(startTime[0])
-    startMinutes = int(startTime[1])
+    [startTime, start_am_pm] = startTime.split()
+    [startHours, startMinutes] = startTime.split(':')
 
     # End Time
-    stopTime = stopTime.split(":")
-    stopHours = int(stopTime[0])
-    stopMinutes = int(stopTime[1])
+    [stopHours, stopMinutes] = stopTime.split(":")
 
-    stopMinutes = stopMinutes + (60 * stopHours)
+    stopMinutes = int(stopMinutes) + (60 * int(stopHours))
 
-    if am_pm == "PM":
+    if start_am_pm == "PM":
         startHours = int(startHours) + 12
 
-    startMinutes = startMinutes + (60 * startHours)
+    startMinutes = int(startMinutes) + (60 * int(startHours))
     totalMinutes = startMinutes + stopMinutes
 
     # Minutes Calculation
