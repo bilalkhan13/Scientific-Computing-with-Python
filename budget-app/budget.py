@@ -11,16 +11,16 @@ class Category:
 
     # Deposit Function
     def deposit(self, amount, desc=""):
-        appendList = {"amount": amount, "description": desc}
-        self.ledger.append(appendList)
+        append_list = {"amount": amount, "description": desc}
+        self.ledger.append(append_list)
         self.amount += amount
 
     # Withdraw Function
     def withdraw(self, amount, desc=""):
         if self.check_funds(amount) == True:
             self.amount -= amount
-            appendList = {"amount": -amount, "description": desc}
-            self.ledger.append(appendList)
+            append_list = {"amount": -amount, "description": desc}
+            self.ledger.append(append_list)
             return True
         else:
             return False
@@ -54,8 +54,8 @@ class Category:
 
         for i in range(max_len - category_len):
             asteriks.append('*')
-        oneSideAsteriks = int(len(asteriks)/2)
-        asteriks.insert(oneSideAsteriks, self.category)
+        one_side_asteriks = int(len(asteriks)/2)
+        asteriks.insert(one_side_asteriks, self.category)
         header = "".join(asteriks)
         ledger_items = []
         for item in self.ledger:
