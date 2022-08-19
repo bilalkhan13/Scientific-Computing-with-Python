@@ -11,8 +11,7 @@ class Category:
 
     # Deposit Function
     def deposit(self, amount, desc=""):
-        append_list = {"amount": amount, "description": desc}
-        self.ledger.append(append_list)
+        self.ledger.append({"amount": amount, "description": desc})
         self.amount += amount
 
     # Withdraw Function
@@ -20,8 +19,7 @@ class Category:
 
         if self.check_funds(amount) == True:
             self.amount -= amount
-            append_list = {"amount": -amount, "description": desc}
-            self.ledger.append(append_list)
+            self.ledger.append({"amount": -amount, "description": desc})
             return True
         else:
             return False
@@ -33,10 +31,9 @@ class Category:
     # Check Funds Availability
     def check_funds(self, amount):
 
-        if self.amount < amount:
-            return False
-        else:
-            return True
+        return False if self.amount < amount else  True
+
+
 
     # Transfer Funds
     def transfer(self, amount, category):
@@ -63,13 +60,10 @@ class Category:
         ledger_items = []
 
         for item in self.ledger:
-            whitespace = max_len
             ledger_item = []
             ledger_item.append(item["description"][:23])
-            whitespace -= len(ledger_item[0])
             ledger_item.append("{0:.2f}".format(item["amount"])[:7])
-            whitespace -= len(ledger_item[1])
-            ledger_item.insert(1, " " * whitespace)
+            ledger_item.insert(1, " ".rjust(max_len - (len(ledger_item[0]) + len(ledger_item[1]))))
             ledger_item.append("\n")
             ledger_items.append(ledger_item)
         ledger_lines = ''.join([j for i in ledger_items for j in i])
