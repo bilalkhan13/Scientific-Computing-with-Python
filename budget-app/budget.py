@@ -17,6 +17,7 @@ class Category:
 
     # Withdraw Function
     def withdraw(self, amount, desc=""):
+
         if self.check_funds(amount) == True:
             self.amount -= amount
             append_list = {"amount": -amount, "description": desc}
@@ -31,6 +32,7 @@ class Category:
 
     # Check Funds Availability
     def check_funds(self, amount):
+
         if self.amount < amount:
             return False
         else:
@@ -38,6 +40,7 @@ class Category:
 
     # Transfer Funds
     def transfer(self, amount, category):
+
         if self.check_funds(amount) == True:
             self.amount -= amount
             self.ledger.append({"amount": -amount, "description": "Transfer to " + category.category})
@@ -58,6 +61,7 @@ class Category:
         asteriks.insert(one_side_asteriks, self.category)
         header = "".join(asteriks)
         ledger_items = []
+
         for item in self.ledger:
             whitespace = max_len
             ledger_item = []
@@ -70,6 +74,7 @@ class Category:
             ledger_items.append(ledger_item)
         ledger_lines = ''.join([j for i in ledger_items for j in i])
         total = self.get_balance()
+
         return f'{header}\n{ledger_lines}Total: {total}'
 
 # Spend Chart
@@ -79,9 +84,12 @@ def create_spend_chart(categories):
     category_names = []
     spent_percentage = []
     spent_list = []
+
     for category in categories:
         total_amount = 0
+
         for item in category.ledger:
+
             if item['amount'] < 0:
                 total_amount -= item['amount']
         spent_list.append(round(total_amount, 2))
@@ -89,9 +97,12 @@ def create_spend_chart(categories):
 
     for amount in spent_list:
         spent_percentage.append(round((amount/sum(spent_list)), 2)*100)
+
     for label in y_axis:
         graph_content += str(label).rjust(3)+"|"
+
         for percentage in spent_percentage:
+
             if percentage >= int(label):
                 graph_content += " o "
             else:
@@ -100,16 +111,23 @@ def create_spend_chart(categories):
     graph_content += "    ----" + ("---" * (len(category_names) - 1)) + "\n    "
 
     longest_name_length = 0
+
     for name in category_names:
+
         if longest_name_length < len(name):
             longest_name_length = len(name)
+
     for val in range(longest_name_length):
+
         for name in category_names:
+
             if len(name) > val:
                 graph_content += " " + name[val]+" "
             else:
                 graph_content += "   "
         graph_content += " "
+
         if val < longest_name_length-1:
             graph_content += "\n    "
+
     return graph_content
