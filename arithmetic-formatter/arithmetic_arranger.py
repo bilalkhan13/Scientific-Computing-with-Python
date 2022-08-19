@@ -1,5 +1,5 @@
 def arithmetic_arranger(problems, displayMode=False):
-    first_operand_line = second_operand_line = dashes_line = result_line = ""
+    first_operand_line = second_operand_line = dashes_line = result_line_prefix = ""
 
     if len(problems) > 5:
         return "Error: Too many problems."
@@ -34,6 +34,6 @@ def arithmetic_arranger(problems, displayMode=False):
 
         if displayMode == True:
             result = int(operand1) + int(operand2) if operator == "+" else int(operand1) - int(operand2)
-            result_line +=  result_new_line + spaces_before_problem + str(result).rjust(before_line_spaces)
+            result_line_prefix +=  result_new_line + spaces_before_problem + str(result).rjust(before_line_spaces)
 
-    return first_operand_line + "\n" + second_operand_line + "\n" + dashes_line + result_line
+    return first_operand_line + "\n" + second_operand_line + "\n" + dashes_line + result_line_prefix
