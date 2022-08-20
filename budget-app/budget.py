@@ -92,7 +92,6 @@ def create_spend_chart(categories):
 
     graph_content += "    ----" + ("---" * (len(category_names) - 1)) + "\n    "
 
-    # for name in category_names:
 
     for val in range(longest_name_length):
 
