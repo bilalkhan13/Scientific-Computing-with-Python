@@ -1,5 +1,6 @@
 
 def add_time(startTime, stopTime, dayOfWeek=None):
+
     # Start Time
     [startTime, start_am_pm] = startTime.split()
     [startHours, startMinutes] = startTime.split(':')
@@ -44,13 +45,15 @@ def add_time(startTime, stopTime, dayOfWeek=None):
 
     # Days Calculation
     if not dayOfWeek == None:
-        daysOfWeek = ['Monday', 'Tuesday', 'Wednesday',
-                      'Thursday', 'Friday', 'Saturday', 'Sunday']
-        pos = 0
+        daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        pos = 0.
+
         while True:
             if dayOfWeek.lower() == daysOfWeek[pos].lower():
                 break
+
             pos = pos + 1
+
         newDayOfWeek = daysOfWeek[((pos + (days % 7)) % 7)]
         new_time = new_time + ", " + newDayOfWeek
 
