@@ -40,20 +40,15 @@ class Category:
 
         max_len = 30
         header = self.name.center(max_len, "*")
-        ledger_items = []
+        content = ""
 
         for item in self.ledger:
-            ledger_item = []
-            ledger_item.append(item["description"][:23])
-            ledger_item.append("{0:.2f}".format(item["amount"])[:7])
-            ledger_item.insert(1, " ".rjust(max_len - (len(ledger_item[0]) + len(ledger_item[1]))))
-            ledger_item.append("\n")
-            ledger_items.append(ledger_item)
-
-        ledger_lines = ''.join([j for i in ledger_items for j in i])
+            content += item['description'].ljust(23, " ")[:23]
+            content += "{0:>7.2f}".format(item['amount'])
+            content += "\n"
         total = self.get_balance()
 
-        return f'{header}\n{ledger_lines}Total: {total}'
+        return f'{header}\n{content}Total: {total}'
 
 
 def create_spend_chart(categories):
