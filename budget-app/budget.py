@@ -1,16 +1,14 @@
 class Category:
-
-    def __init__(self, category):
+    def __init__(self, name):
         self.ledger = []
         self.amount = 0
-        self.name = category
+        self.name = name
 
     def deposit(self, amount, desc=""):
         self.ledger.append({"amount": amount, "description": desc})
         self.amount += amount
 
     def withdraw(self, amount, desc=""):
-
         if self.check_funds(amount):
             self.amount -= amount
             self.ledger.append({"amount": -amount, "description": desc})
@@ -19,15 +17,12 @@ class Category:
         return False
 
     def get_balance(self):
-
         return self.amount
 
     def check_funds(self, amount):
-
-        return False if self.amount < amount else True
+        return  not self.amount < amount
 
     def transfer(self, amount, category):
-
         if self.check_funds(amount):
             self.amount -= amount
             self.ledger.append({"amount": -amount, "description": "Transfer to " + category.name})
@@ -37,32 +32,26 @@ class Category:
         return False
 
     def __str__(self):
-
-        max_len = 30
-        header = self.name.center(max_len, "*")
+        header = self.name.center(30, "*")
         content = ""
 
-        for item in self.ledger:
-            content += item['description'].ljust(23, " ")[:23]
-            content += "{0:>7.2f}".format(item['amount'])
+        for transaction in self.ledger:
+            content += transaction['description'].ljust(23, " ")[:23]
+            content += "{0:>7.2f}".format(transaction['amount'])
             content += "\n"
-        total = self.get_balance()
 
-        return f'{header}\n{content}Total: {total}'
+        return f'{header}\n{content}Total: {self.get_balance()}'
 
 
 def create_spend_chart(categories):
     y_axis = ["100", "90", "80", "70", "60", "50", "40", "30", "20", "10", "0"]
     graph_content = "Percentage spent by category\n"
-    category_names = []
-    spent_percentage = []
-    spent_list = []
+    category_names,spent_percentage,spent_list = [],[],[]
 
     for category in categories:
         total_spent_amount = 0
 
         for transaction in category.ledger:
-
             if transaction['amount'] < 0:
                 total_spent_amount = abs(transaction['amount'])
 
@@ -80,7 +69,6 @@ def create_spend_chart(categories):
         graph_content += value.rjust(3)+"|"
 
         for percentage in spent_percentage:
-
             graph_content += " o " if percentage >= int(value) else "   "
 
         graph_content += " \n"
@@ -89,13 +77,8 @@ def create_spend_chart(categories):
 
 
     for val in range(longest_name_length):
-
         for name in category_names:
-
-            if len(name) > val:
-                graph_content += set_value(name[val])
-            else:
-                graph_content += set_value()
+                graph_content += set_value(name[val]) if len(name) > val else set_value()
 
         graph_content += " "
 
@@ -105,9 +88,8 @@ def create_spend_chart(categories):
     return graph_content
 
 
-def set_value(value=None):
-
-    if value == None:
+def set_value(value=""):
+    if value == "":
         return "   "
 
     return " " + value + " "
