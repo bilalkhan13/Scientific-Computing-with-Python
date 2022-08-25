@@ -20,7 +20,7 @@ class Category:
         return self.amount
 
     def check_funds(self, amount):
-        return  not self.amount < amount
+        return not self.amount < amount
 
     def transfer(self, amount, category):
         if self.check_funds(amount):
@@ -75,6 +75,8 @@ def create_spend_chart(categories):
 
     graph_content += "    ----" + ("---" * (len(category_names) - 1)) + "\n    "
 
+    def set_value(value=" "):
+        return " " + value + " "
 
     for val in range(longest_name_length):
         for name in category_names:
@@ -86,10 +88,3 @@ def create_spend_chart(categories):
             graph_content += "\n    "
 
     return graph_content
-
-
-def set_value(value=""):
-    if value == "":
-        return "   "
-
-    return " " + value + " "
