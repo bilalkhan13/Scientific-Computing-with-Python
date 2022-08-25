@@ -1,6 +1,5 @@
 
 def add_time(startTime, stopTime, dayOfWeek=None):
-
     # Start Time
     [startTime, start_am_pm] = startTime.split()
     [startHours, startMinutes] = startTime.split(':')
