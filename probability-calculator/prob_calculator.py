@@ -2,12 +2,14 @@ import random
 import copy
 
 class Hat:
-
     def __init__(self, **all_items):
         self.contents = []
+
         for key, value in all_items.items():
+
             for n in range(value):
                 self.contents.append(key)
+
         print(self.contents)
         self.intial_contents = copy.copy(self.contents)
 
@@ -15,7 +17,6 @@ class Hat:
         self.contents = copy.copy(self.intial_contents)
 
     def draw(self, count):
-
         # Draw the specified count of items from the hat, return all items if the count is > number of items
         try:
             drawn = random.sample(self.contents, count)
@@ -40,7 +41,6 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
         returned_balls = hat.draw(num_balls_drawn)
 
         for ball_color, ball_count in expected_balls.items():
-
             for i in range(ball_count):
 
                 if ball_color in returned_balls:
@@ -51,5 +51,4 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
                 expected_count += 1
 
     probability = expected_count / num_experiments
-
     return probability
