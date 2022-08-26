@@ -1,66 +1,72 @@
+def add_time(start_time, stop_time, day_of_week=None):
+    PM = "PM"
+    [intial_time, start_day_unit] = get_time(start_time)
+    [start_hours, start_minutes] = get_hours_minutes(intial_time)
 
-def add_time(startTime, stopTime, dayOfWeek=None):
-    # Start Time
-    [startTime, start_am_pm] = startTime.split()
-    [startHours, startMinutes] = startTime.split(':')
+    [stop_hours, stop_minutes] = get_hours_minutes(stop_time)
 
-    # End Time
-    [stopHours, stopMinutes] = stopTime.split(":")
+    stop_minutes = into_minutes(stop_minutes, stop_hours)
 
-    stopMinutes = int(stopMinutes) + (60 * int(stopHours))
+    if start_day_unit == PM:
+        start_hours = start_hours + 12
 
-    if start_am_pm == "PM":
-        startHours = int(startHours) + 12
+    start_minutes = into_minutes(start_minutes, start_hours)
+    total_minutes = start_minutes + stop_minutes
 
-    startMinutes = int(startMinutes) + (60 * int(startHours))
-    totalMinutes = startMinutes + stopMinutes
+    final_minutes = total_minutes % 60
+    total_hours = int(total_minutes / 60)
 
-    # Minutes Calculation
-    finalMinutes = totalMinutes % 60
-    finalHours = int(totalMinutes / 60)
+    if final_minutes < 10:
+        final_minutes = "0" + str(final_minutes)
+    else:
+        final_minutes = str(final_minutes)
 
-    if len(str(finalMinutes)) == 1:
-        finalMinutes = "0" + str(finalMinutes)
-    elif len(str(finalMinutes)) == 2:
-        finalMinutes = str(finalMinutes)
+    hours = total_hours % 24
+    days = int(total_hours / 24)
 
-    # Calculation Days
-    hours = finalHours % 24
-    days = int(finalHours / 24)
-
-    # Am & PM Calculation
-    finalHours = hours % 12
+    final_hours = hours % 12
 
     if int(hours / 12) == 0:
-        finalAmPm = "AM"
-        if finalHours == 0:
-            finalHours = 12
+        am_or_pm = "AM"
+
+        if final_hours == 0:
+            final_hours = 12
     else:
-        finalAmPm = "PM"
-        if finalHours == 0:
-            finalHours = 12
+        am_or_pm = PM
 
-    new_time = str(finalHours) + ":" + finalMinutes + " " + finalAmPm
+        if final_hours == 0:
+            final_hours = 12
 
-    # Days Calculation
-    if not dayOfWeek == None:
-        daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-        pos = 0.
+    time_stamp = str(final_hours) + ":" + final_minutes + " " + am_or_pm
+
+    if not day_of_week == None:
+        days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        pos = 0
 
         while True:
-            if dayOfWeek.lower() == daysOfWeek[pos].lower():
+            if day_of_week.lower() == days_of_week[pos].lower():
                 break
 
             pos = pos + 1
 
-        newDayOfWeek = daysOfWeek[((pos + (days % 7)) % 7)]
-        new_time = new_time + ", " + newDayOfWeek
+        newDay_of_week = days_of_week[((pos + (days % 7)) % 7)]
+        time_stamp += ", " + newDay_of_week
 
-    # Output
-    if days == 1:
-        new_time = new_time + " (next day)"
-    elif days > 1:
-        days = str(days)
-        new_time = new_time + " (" + days + " days later)"
+    if not days == 0:
+        time_stamp += " (next day)" if days == 1 else " (" + str(days) + " days later)"
 
-    return new_time
+    return time_stamp
+
+
+def get_time(get_time):
+    [time, start_day_unit] = get_time.split()
+    return time, start_day_unit
+
+
+def get_hours_minutes(get_time):
+    [hours, minutes] = get_time.split(":")
+    return int(hours), int(minutes)
+
+
+def into_minutes(minutes, hours):
+    return int(int(minutes) + (60 * int(hours)))
