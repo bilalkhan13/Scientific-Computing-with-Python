@@ -2,19 +2,17 @@ import random
 import copy
 
 class Hat:
-    def __init__(self, **all_items):
+    def __init__(self, **color_balls):
         self.contents = []
 
-        for key, value in all_items.items():
-
+        for key, value in color_balls.items():
             for n in range(value):
                 self.contents.append(key)
 
-        print(self.contents)
-        self.intial_contents = copy.copy(self.contents)
+        self.INITIAL_CONTENTS = copy.copy(self.contents)
 
     def reset(self):
-        self.contents = copy.copy(self.intial_contents)
+        self.contents = copy.copy(self.INITIAL_CONTENTS)
 
     def draw(self, count):
         # Draw the specified count of items from the hat, return all items if the count is > number of items
@@ -29,7 +27,7 @@ class Hat:
 
         # Refill the hat if empty
         if len(self.contents) == 0:
-            self.contents = copy.copy(self.intial_contents)
+            self.contents = copy.copy(self.INITIAL_CONTENTS)
         return drawn
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):

@@ -4,5 +4,5 @@ Suppose there is a hat containing 5 blue balls, 4 red balls, and 2 green balls. 
 
 For this project, you will write a program to determine the approximate probability of drawing certain balls randomly from a hat.
 
-## For more detail please visit:
+## For more details please visit:
 *https://www.freecodecamp.org/learn/scientific-computing-with-python/scientific-computing-with-python-projects/probability-calculator*
